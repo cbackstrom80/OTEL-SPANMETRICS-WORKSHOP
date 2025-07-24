@@ -3,7 +3,7 @@ import requests
 
 # === Config ===
 url = "https://ingest.us1.signalfx.com/v2/event"
-token = "dkylUMnNoi1m8YKq9awXNg"
+token = "INSERT YOUR TOKEN HERE"
 headers = {
     "Content-Type": "application/json",
     "X-SF-Token": token
