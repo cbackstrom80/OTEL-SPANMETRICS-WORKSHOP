@@ -392,23 +392,16 @@ service:
 * Check Collector logs:
 
   ```bash
-  docker-compose logs otelcol
+  docker-compose logs otel-collector
   ```
-* Confirm Prometheus scraping at `/metrics`:
 
-  ```
-  curl http://localhost:8888/metrics
   ```
 * Verify Splunk ingestion via logs or metric dashboards.
 * Adjust connector settings to manage label explosion or exemplar volume.
 
 ---
 
-## 📚 Learn More & Splunk Resources
-
-* \[Splunk OTel Collector Helm & enterprise guide] ([Artifact Hub][6], [Last9][4], [GitHub][1])
-* \[Splunk SpanMetrics connector docs (Grafana Alloy)] ([Grafana Labs][2])
-* \[SpanMetrics in action: convert traces to R.E.D metrics] (Splunk blog/guides)
+metrics] (Splunk blog/guides)
 
 ---
 
