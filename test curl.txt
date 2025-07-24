@@ -1,0 +1,18 @@
+curl -X POST "https://ingest.us1.signalfx.com/v2/event" \
+    -H "Content-Type: application/json" \
+    -H "X-SF-Token: dkylUMnNoi1m8YKq9awXNg" \
+    -d '[
+            {
+                "category": "USER_DEFINED",
+                "eventType": "test_event",
+                "dimensions": {
+                    "environment": "production",
+                    "service": "API",
+                    "product": "SPAM"
+                },
+                "properties": {
+                    "sha1": "1234567890abc"
+                },
+                "timestamp": 1556793030000
+            }
+        ]'

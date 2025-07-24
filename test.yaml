@@ -1,0 +1,16 @@
+processors:
+  resource/add_workflow:
+    attributes:
+      - action: insert
+        key: workflow.name
+        value: ultra_important_workflow
+      - action: insert
+        key: team
+        value: retail_backend
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [resource/add_workflow, batch]
+      exporters: [signalfx]

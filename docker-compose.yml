@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  sidecar-enricher:
+    build:
+      context: ./sidecar
+    ports:
+      - "8888:8888"
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+    depends_on:
+      - otel-collector
+
+  flask-app:
+    build: app/
+    environment:
+      - OTEL_RESOURCE_ATTRIBUTES=deployment.environment=cbsandbox,service.version=1.0.0
+      - OTEL_SERVICE_NAME=logaggservice
+
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://sidecar-enricher:5000
+      - OTEL_SERVICE_NAME=myapp
+
+    ports:
+      - "89:5000"
+    depends_on:
+        - otel-collector
+    container_name: flaskapp
+
+  # OpenTelemetry Collector service
+  otel-collector:
+    image: quay.io/signalfx/splunk-otel-collector:latest # Or a specific version
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./OTEL/agent_config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+      - "13133:13133" # Healthcheck
+      - "55679:55679" # Healthcheck
+
+    environment:
+      SPLUNK_ACCESS_TOKEN: INSERT INGEST TOKEN HERE
+      SPLUNK_API_URL: https://api.us1.signalfx.com
+      SPLUNK_REALM: US1
